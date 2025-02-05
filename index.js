@@ -73,9 +73,7 @@ app.get('/api/classify-number', async (req, res) => {
     const digitSum = getDigitSum(num);
     const funFact = await Promise.all ([getFunFact(num)]);
 
-    const properties = [];
-    if (isArmstrongNum) properties.push('armstrong');
-    properties.push(parity);
+    const properties = isArmstrongNum ? ['armstrong', parity] : [parity]
 
     res.status(200).json({
         number: num,
