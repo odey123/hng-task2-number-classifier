@@ -51,14 +51,14 @@ async function getFunFact(num) {
     const response = await axios.get(`http://numbersapi.com/${num}/math?json`)
       return response.data.text;
    } catch (error) {
-    console.error('Error fethching fun fact:', error)
+    console.error('Error fetching fun fact:', error)
        return null
    }
 }
 
 app.get('/api/classify-number', async (req, res) => {
     const number = req.query.number;
-    if (!number || isNaN(number)) {
+    if (number === undefined || number === '' || isNaN(number)) {
         return res.status(400).json({
             number: number,
             error: true
@@ -71,7 +71,7 @@ app.get('/api/classify-number', async (req, res) => {
     const isArmstrongNum = isArmstrong(num);
     const parity = getParity(num);
     const digitSum = getDigitSum(num);
-    const funFact = await getFunFact(num);
+    const funFact = await Promise.all ([getFunFact(num)]);
 
     const properties = [];
     if (isArmstrongNum) properties.push('armstrong');
