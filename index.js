@@ -60,7 +60,7 @@ app.get('/api/classify-number', async (req, res) => {
     const number = req.query.number;
     if (number === undefined || number === '' || isNaN(number)) {
         return res.status(400).json({
-            number: number,
+            number: number || req.query.number,
             error: true
         })
     }
